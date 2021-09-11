@@ -277,6 +277,10 @@ export default class ServerlessOffline {
     functionKeys.forEach((functionKey) => {
       const functionDefinition = service.getFunction(functionKey)
 
+      if (!functionDefinition.layers && service.provider.layers) {
+        functionDefinition.layers = service.provider.layers
+      }
+
       lambdas.push({ functionKey, functionDefinition })
 
       const events = service.getAllEventsInFunction(functionKey) || []
